@@ -8,8 +8,8 @@ const courseRoutes = require("./course/course.routes");
 // Import middleware
 const errorHandler = require("./shared/errorHandler");
 
-// Import associations to ensure they're loaded
-require("./shared/associations");
+// Load DB (initializes models + associations)
+require("./shared/database");
 
 const app = express();
 

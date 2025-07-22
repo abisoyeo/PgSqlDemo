@@ -1,5 +1,4 @@
-const Course = require("./course.model");
-const User = require("../auth/auth.model");
+const { User, Course } = require("../shared/database");
 
 class CourseService {
   async createCourse(courseData, userId) {
