@@ -39,12 +39,12 @@
             "request": {
                 "method": "GET",
                 "url": {
-                    "raw": "http://localhost:3000/api/auth/verify-email/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJvdGk1NzM3NjU0NUBnbWFpbC5jb20iLCJpYXQiOjE3NTMyNzE0NzYsImV4cCI6MTc1MzM1Nzg3Nn0.Cw48DYRCF6w59BxuMLaa0eT9ETCe4hfv4yTTqsupB50",
+                    "raw": "http://localhost:3000/api/auth/verify-email/<token_from_mail>",
                     "path": [
                         "api",
                         "auth",
                         "verify-email",
-                        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJvdGk1NzM3NjU0NUBnbWFpbC5jb20iLCJpYXQiOjE3NTMyNzE0NzYsImV4cCI6MTc1MzM1Nzg3Nn0.Cw48DYRCF6w59BxuMLaa0eT9ETCe4hfv4yTTqsupB50"
+                        "<token_from_mail>"
                     ],
                     "protocol": "http",
                     "host": [
@@ -143,12 +143,12 @@
             "request": {
                 "method": "POST",
                 "url": {
-                    "raw": "http://localhost:3000/api/auth/reset-password/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJvdGk1NzM3NjU0NUBnbWFpbC5jb20iLCJpYXQiOjE3NTMyNzIxNDQsImV4cCI6MTc1MzI3MzA0NH0.2jnJO_Vctl0SDDlbE3SBiT_CJWWnb-hmjPZamrqMbME",
+                    "raw": "http://localhost:3000/api/auth/reset-password/<token_from_mail>",
                     "path": [
                         "api",
                         "auth",
                         "reset-password",
-                        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJvdGk1NzM3NjU0NUBnbWFpbC5jb20iLCJpYXQiOjE3NTMyNzIxNDQsImV4cCI6MTc1MzI3MzA0NH0.2jnJO_Vctl0SDDlbE3SBiT_CJWWnb-hmjPZamrqMbME"
+                        "<token_from_mail>"
                     ],
                     "protocol": "http",
                     "host": [
