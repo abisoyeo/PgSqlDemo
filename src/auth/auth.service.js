@@ -27,6 +27,8 @@ class AuthService {
 
     return {
       msg: "Registration successful. Please check your email to verify your account.",
+      email: user.email,
+      userId: user.id,
     };
   }
 
@@ -40,7 +42,12 @@ class AuthService {
       await user.save();
 
       await sendWelcomeEmail(user.email);
-      return { msg: "Email verified successfully." };
+
+      return {
+        msg: "Email verified successfully.",
+        email: user.email,
+        userId: user.id,
+      };
     } catch (error) {
       throw new Error("Invalid or expired verification token");
     }
@@ -74,7 +81,11 @@ class AuthService {
     const resetLink = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
 
     await sendResetPasswordEmail(email, resetLink);
-    return { msg: "Password reset link sent to your email." };
+    return {
+      msg: "Password reset link sent to your email.",
+      email: user.email,
+      userId: user.id,
+    };
   }
 
   async resetPassword(token, newPassword) {

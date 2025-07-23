@@ -1,16 +1,27 @@
 const courseService = require("./course.service");
-
+const EventTypes = require("../events/eventTypes");
+const Analytics = require("../events/analytics.service");
 class CourseController {
   async createCourse(req, res, next) {
     try {
-      const course = await courseService.createCourse(
+      const result = await courseService.createCourse(
         req.body,
         req.user.userId
       );
+
+      await Analytics.track(
+        EventTypes.COURSE_CREATED,
+        {
+          method: "email",
+          email: req.user.email,
+        },
+        result.userId
+      );
+
       res.status(201).json({
         success: true,
         message: "Course created successfully",
-        data: course,
+        data: result.course,
       });
     } catch (error) {
       next(error);

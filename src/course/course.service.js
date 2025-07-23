@@ -2,10 +2,15 @@ const { User, Course } = require("../shared/database");
 
 class CourseService {
   async createCourse(courseData, userId) {
-    return await Course.create({
+    const course = await Course.create({
       ...courseData,
-      userId,
+      userId: userId,
     });
+
+    return {
+      course,
+      userId,
+    };
   }
 
   async getAllCourses() {

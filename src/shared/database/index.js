@@ -2,6 +2,7 @@ const { Sequelize, DataTypes } = require("sequelize");
 const config = require("../config/db.config.js");
 const defineUser = require("../../auth/auth.model");
 const defineCourse = require("../../course/course.model");
+const defineEvent = require("../../events/eventlog.model.js");
 const applyAssociations = require("./associations");
 
 const env = process.env.NODE_ENV || "development";
@@ -27,6 +28,7 @@ const sequelize = new Sequelize(
 // Init models
 const User = defineUser(sequelize, DataTypes);
 const Course = defineCourse(sequelize, DataTypes);
+const EventLog = defineEvent(sequelize, DataTypes);
 
 // Store models in db object
 const db = {
@@ -34,6 +36,7 @@ const db = {
   Sequelize,
   User,
   Course,
+  EventLog,
 };
 
 // Apply associations
@@ -50,4 +53,5 @@ module.exports = {
   Sequelize,
   User,
   Course,
+  EventLog,
 };
