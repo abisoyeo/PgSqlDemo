@@ -1,0 +1,171 @@
+{
+    "info": {
+        "_postman_id": "8d4b31a4-00e9-4c39-a847-e29b0777595c",
+        "name": "PgSqlDemo",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "Register",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3000/api/auth/register",
+                    "path": [
+                        "api",
+                        "auth",
+                        "register"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\r\n  \"email\": \"your_email@gmail.com\",\r\n  \"password\": \"12345678\"\r\n}\r\n"
+                }
+            }
+        },
+        {
+            "name": "Verify Email",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:3000/api/auth/verify-email/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJvdGk1NzM3NjU0NUBnbWFpbC5jb20iLCJpYXQiOjE3NTMyNzE0NzYsImV4cCI6MTc1MzM1Nzg3Nn0.Cw48DYRCF6w59BxuMLaa0eT9ETCe4hfv4yTTqsupB50",
+                    "path": [
+                        "api",
+                        "auth",
+                        "verify-email",
+                        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJvdGk1NzM3NjU0NUBnbWFpbC5jb20iLCJpYXQiOjE3NTMyNzE0NzYsImV4cCI6MTc1MzM1Nzg3Nn0.Cw48DYRCF6w59BxuMLaa0eT9ETCe4hfv4yTTqsupB50"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                }
+            }
+        },
+        {
+            "name": "Login - verified user",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3000/api/auth/login",
+                    "path": [
+                        "api",
+                        "auth",
+                        "login"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"email\": \"your_email@gmail.com\",\n  \"password\": \"newStrongPassword123\"\n}\n"
+                }
+            }
+        },
+        {
+            "name": "Forgot Password",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3000/api/auth/forgot-password",
+                    "path": [
+                        "api",
+                        "auth",
+                        "forgot-password"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"email\": \"your_email@gmail.com\"\n}\n"
+                }
+            }
+        },
+        {
+            "name": "Login - unverified user test",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3000/api/auth/login",
+                    "path": [
+                        "api",
+                        "auth",
+                        "login"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}\n"
+                }
+            }
+        },
+        {
+            "name": "Reset Password",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3000/api/auth/reset-password/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJvdGk1NzM3NjU0NUBnbWFpbC5jb20iLCJpYXQiOjE3NTMyNzIxNDQsImV4cCI6MTc1MzI3MzA0NH0.2jnJO_Vctl0SDDlbE3SBiT_CJWWnb-hmjPZamrqMbME",
+                    "path": [
+                        "api",
+                        "auth",
+                        "reset-password",
+                        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJvdGk1NzM3NjU0NUBnbWFpbC5jb20iLCJpYXQiOjE3NTMyNzIxNDQsImV4cCI6MTc1MzI3MzA0NH0.2jnJO_Vctl0SDDlbE3SBiT_CJWWnb-hmjPZamrqMbME"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"newPassword\": \"newStrongPassword123\"\n}\n"
+                }
+            }
+        }
+    ]
+}
