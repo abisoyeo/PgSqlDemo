@@ -1,61 +1,95 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { User } = require("../shared/database");
+const generateToken = require("../shared/generateToken");
+const {
+  sendVerificationEmail,
+  sendResetPasswordEmail,
+  sendWelcomeEmail,
+} = require("../shared/sendEmail");
 
 class AuthService {
-  async register(userData) {
-    const { email, password } = userData;
-
-    // Check if user exists
+  async register({ email, password, role = "user" }) {
     const existingUser = await User.findOne({ where: { email } });
-    if (existingUser) {
-      throw new Error("User already exists");
-    }
+    if (existingUser) throw new Error("User already exists");
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 12);
-
-    // Create user
     const user = await User.create({
       email,
       password: hashedPassword,
+      role,
+      isVerified: false,
     });
 
+    const verifyToken = generateToken({ email }, "1d");
+    const verifyLink = `${process.env.CLIENT_URL}/verify-email/${verifyToken}`;
+    await sendVerificationEmail(email, verifyLink);
+
     return {
-      id: user.id,
-      email: user.email,
+      msg: "Registration successful. Please check your email to verify your account.",
     };
   }
 
-  async login(userData) {
-    const { email, password } = userData;
+  async verifyEmail(token) {
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await User.findOne({ where: { email: decoded.email } });
+      if (!user) throw new Error("User not found");
 
-    // Find user
+      user.isVerified = true;
+      await user.save();
+
+      await sendWelcomeEmail(user.email);
+      return { msg: "Email verified successfully." };
+    } catch (error) {
+      throw new Error("Invalid or expired verification token");
+    }
+  }
+
+  async login({ email, password }) {
     const user = await User.findOne({ where: { email } });
-    if (!user) {
-      throw new Error("Invalid credentials");
-    }
+    if (!user || !user.isVerified)
+      throw new Error("Invalid credentials or email not verified");
 
-    // Check password
-    const isValidPassword = await bcrypt.compare(password, user.password);
-    if (!isValidPassword) {
-      throw new Error("Invalid credentials");
-    }
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) throw new Error("Invalid credentials");
 
-    // Generate JWT
-    const token = jwt.sign(
-      { userId: user.id, email: user.email },
-      process.env.JWT_SECRET,
-      { expiresIn: "24h" }
-    );
+    const token = generateToken({
+      userId: user.id,
+      email: user.email,
+      role: user.role,
+    });
 
     return {
-      user: {
-        id: user.id,
-        email: user.email,
-      },
+      user: { id: user.id, email: user.email, role: user.role },
       token,
     };
+  }
+
+  async forgotPassword({ email }) {
+    const user = await User.findOne({ where: { email } });
+    if (!user) throw new Error("User not found");
+
+    const resetToken = generateToken({ email }, "15m");
+    const resetLink = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
+
+    await sendResetPasswordEmail(email, resetLink);
+    return { msg: "Password reset link sent to your email." };
+  }
+
+  async resetPassword(token, newPassword) {
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await User.findOne({ where: { email: decoded.email } });
+      if (!user) throw new Error("User not found");
+
+      user.password = await bcrypt.hash(newPassword, 12);
+      await user.save();
+
+      return { msg: "Password has been reset successfully." };
+    } catch {
+      throw new Error("Invalid or expired token");
+    }
   }
 }
 

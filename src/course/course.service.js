@@ -9,6 +9,16 @@ class CourseService {
   }
 
   async getAllCourses() {
+    // If you want a flattened structure
+    // const flattened = course.map((course) => {
+    //   return {
+    //     id: course.id,
+    //     title: course.title,
+    //     instructorName: course.instructor?.name,
+    //     // ...other fields
+    //   };
+    // });
+
     return await Course.findAll({
       include: [
         {
@@ -36,41 +46,37 @@ class CourseService {
       throw new Error("Course not found");
     }
 
-    // If you want a flattened structure
-    // const flattened = course.map((course) => {
-    //   return {
-    //     id: course.id,
-    //     title: course.title,
-    //     instructorName: course.instructor?.name,
-    //     // ...other fields
-    //   };
-    // });
-
     return course;
   }
 
-  async updateCourse(id, courseData, userId) {
+  async updateCourse(id, courseData, userId, userRole) {
     const course = await Course.findByPk(id);
 
     if (!course) {
       throw new Error("Course not found");
     }
 
-    if (course.userId !== userId) {
+    const isOwner = course.userId === userId;
+    const isAdmin = userRole === "admin";
+
+    if (!isOwner && !isAdmin) {
       throw new Error("Unauthorized to update this course");
     }
 
     return await course.update(courseData);
   }
 
-  async deleteCourse(id, userId) {
+  async deleteCourse(id, userId, userRole) {
     const course = await Course.findByPk(id);
 
     if (!course) {
       throw new Error("Course not found");
     }
 
-    if (course.userId !== userId) {
+    const isOwner = course.userId === userId;
+    const isAdmin = userRole === "admin";
+
+    if (!isOwner && !isAdmin) {
       throw new Error("Unauthorized to delete this course");
     }
 

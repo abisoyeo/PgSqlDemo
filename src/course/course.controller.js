@@ -46,7 +46,8 @@ class CourseController {
       const course = await courseService.updateCourse(
         req.params.id,
         req.body,
-        req.user.userId
+        req.user.userId,
+        req.user.role
       );
       res.json({
         success: true,
@@ -62,7 +63,8 @@ class CourseController {
     try {
       const result = await courseService.deleteCourse(
         req.params.id,
-        req.user.userId
+        req.user.userId,
+        req.user.role
       );
       res.json({
         success: true,

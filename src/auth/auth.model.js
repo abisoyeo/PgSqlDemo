@@ -18,6 +18,15 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: { len: [6, 255] },
       },
+      role: {
+        type: DataTypes.ENUM("user", "admin", "instructor"),
+        defaultValue: "user",
+        allowNull: false,
+      },
+      isVerified: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
     },
     {
       tableName: "users",
